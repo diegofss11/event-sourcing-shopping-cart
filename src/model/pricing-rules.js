@@ -7,7 +7,7 @@ export const pricingRules = {
         value: appleTv.price,
     },
     [superIpad.sku]: {
-        occurrences: 4,
+        occurrences: 5,
         type: 'BULK_DISCOUNT',
         value: superIpad.price - 499.99
     },

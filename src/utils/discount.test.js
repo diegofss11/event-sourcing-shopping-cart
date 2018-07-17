@@ -5,7 +5,7 @@ describe('#discount', () => {
     describe('Apple TV discount rule', () => {
         const appleTvDiscountRule = pricingRules['atv'];
 
-        it('gets a discount if users buy 3 or more', () => {
+        it('gets a discount if users buy 3', () => {
             const discount = getDiscount(appleTvDiscountRule, 3);
 
             expect(discount).to.eql({
@@ -15,8 +15,18 @@ describe('#discount', () => {
             });
         });
 
-        it('does not get any discount if users buy less than 3', () => {
-            const discount = getDiscount(appleTvDiscountRule, 2);
+        it('gets a discount if users buy 6 (any multiple of 3)', () => {
+            const discount = getDiscount(appleTvDiscountRule, 6);
+
+            expect(discount).to.eql({
+                occurrences: 3,
+                type: 'SINGLE_DISCOUNT',
+                value: 109.50,
+            });
+        });
+
+        it('does not get any discount if users buy less than 1', () => {
+            const discount = getDiscount(appleTvDiscountRule, 1);
 
             expect(discount).to.eql(undefined);
         });
@@ -29,7 +39,7 @@ describe('#discount', () => {
             const discount = getDiscount(superIpadDiscountRule, 5);
 
             expect(discount).to.eql({
-                occurrences: 4,
+                occurrences: 5,
                 type: 'BULK_DISCOUNT',
                 value: 250
             });

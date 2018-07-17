@@ -5,8 +5,6 @@ import { macbookPro, appleTv, superIpad } from '../model/catalogue';
 import { initialState } from '../state/scan/scan-reducer';
 import { pricingRules } from '../model/pricing-rules';
 import scanActionTypes from '../state/scan/scan-action-types';
-import discountActionTypes from '../state/discount/discount-action-types';
-import * as discountActionCreators from '../state/discount/discount-action-creators';
 
 const middlewares = [thunk, discountEmitterMiddleware(pricingRules)];
 const mockStore = configMockStore(middlewares);
@@ -42,7 +40,7 @@ describe('#discountEmitterMiddleware', () => {
                 type: scanActionTypes.PRODUCT_SCANNED
             },
             addDiscount: {
-                data: { discount: { occurrences: 4, type: 'BULK_DISCOUNT', value: 250 } },
+                data: { discount: { occurrences: 5, type: 'BULK_DISCOUNT', value: 250 } },
                 type: 'DISCOUNT_ADDED'
             }
         };
@@ -72,10 +70,7 @@ describe('#discountEmitterMiddleware', () => {
                 type: 'DISCOUNT_ADDED'
             }
         };
-
         const expectedActions = [ actions.scanMacbookProAction, actions.addDiscount];
-
-        const scanMacbookProAction = { data: { product: macbookPro }, type: scanActionTypes.PRODUCT_SCANNED };
         const store = mockStore({ scan: initialState });
 
         store.dispatch(actions.scanMacbookProAction);
